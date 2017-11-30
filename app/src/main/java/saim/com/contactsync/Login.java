@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
 
     EditText inputEmail, inputPassword;
     Button btnLogin;
-    TextView txtTarmsCondition, txtForgetPassword;
+    TextView txtTarmsCondition, txtDeveloper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
         txtTarmsCondition = (TextView) findViewById(R.id.txtTarmsCondition);
-        txtForgetPassword = (TextView) findViewById(R.id.txtForgetPassword);
+        txtDeveloper = (TextView) findViewById(R.id.txtDeveloper);
 
         ButtonClicked();
     }

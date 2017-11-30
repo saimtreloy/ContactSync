@@ -1,11 +1,22 @@
 package saim.com.contactsync;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +52,8 @@ public class ActivityServerContact extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManagerServerContact;
     RecyclerView.Adapter serverContactAdapter;
 
+    ImageView imgSyncServerConatct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +77,16 @@ public class ActivityServerContact extends AppCompatActivity {
         recyclerViewServerContact.setLayoutManager(layoutManagerServerContact);
         recyclerViewServerContact.setHasFixedSize(true);
 
+        imgSyncServerConatct = (ImageView) findViewById(R.id.imgSyncServerConatct);
+
         ContactRetrive(new SharedPrefDatabase(getApplicationContext()).RetriveID().toString().trim());
+
+        imgSyncServerConatct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AsyncTaskAddAllContact().execute("Hello Saim");
+            }
+        });
     }
 
 
@@ -133,4 +155,84 @@ public class ActivityServerContact extends AppCompatActivity {
         stringRequest.setShouldCache(false);
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.option_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_add_contact:
+
+                new AsyncTaskAddAllContact().execute("Hello Saim");
+
+                return true;
+            case R.id.menu_delete:
+
+
+
+                return true;
+            case R.id.menu_exit:
+
+
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private class AsyncTaskAddAllContact extends AsyncTask<String, String, String> {
+
+        private String resp;
+
+        @Override
+        protected String doInBackground(String... params) {
+            progressDialog.setMessage("Please wait. Contact is updateing...");
+            progressDialog.show();
+            for (int i=0; i<adapterlist.size(); i++){
+                Log.d("SAIM HANDLER", adapterlist.get(i).getName());
+                ContentValues values = new ContentValues();
+                values.put(Contacts.People.NUMBER, adapterlist.get(i).getNumber());
+                values.put(Contacts.People.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM);
+                values.put(Contacts.People.NAME, adapterlist.get(i).getName());
+                Uri dataUri = getContentResolver().insert(Contacts.People.CONTENT_URI, values);
+                Uri updateUri = Uri.withAppendedPath(dataUri, Contacts.People.Phones.CONTENT_DIRECTORY);
+                values.clear();
+                values.put(Contacts.People.Phones.TYPE, Contacts.People.TYPE_MOBILE);
+                values.put(Contacts.People.NUMBER, adapterlist.get(i).getNumber());
+                updateUri = getContentResolver().insert(updateUri, values);
+            }
+
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "All contact added to your conatact list.", Toast.LENGTH_LONG).show();
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+        }
+    }
+
 }

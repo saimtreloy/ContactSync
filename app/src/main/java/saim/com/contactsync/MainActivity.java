@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import at.markushi.ui.CircleButton;
 import saim.com.contactsync.ContactList.ContactAdapter;
 import saim.com.contactsync.ContactList.ContactModel;
 import saim.com.contactsync.Utility.ApiURL;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
+    CircleButton btnContactUpload, btnContactSync;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
         button = (Button)findViewById(R.id.button1);
         button2 = (Button)findViewById(R.id.button2);
         btnUpload = (Button) findViewById(R.id.btnUpload);
+
+        btnContactUpload = (CircleButton) findViewById(R.id.btnContactUpload);
+        btnContactSync = (CircleButton) findViewById(R.id.btnContactSync);
+
         StoreContacts = new ArrayList<String>();
 
         EnableRuntimePermission();
@@ -112,6 +119,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.show();
                 Log.d("SAIM JA", ja.toString());
+                ContactUpload(new SharedPrefDatabase(getApplicationContext()).RetriveID().toString().trim(), ja.toString());
+            }
+        });
+
+        btnContactSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ActivityServerContact.class));
+            }
+        });
+
+        btnContactUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
                 ContactUpload(new SharedPrefDatabase(getApplicationContext()).RetriveID().toString().trim(), ja.toString());
             }
         });
@@ -176,6 +198,10 @@ public class MainActivity extends AppCompatActivity {
             case RequestPermissionCode:
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(MainActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
+
+                    GetContactsIntoArrayList();
+                    arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1, StoreContacts);
+                    listView.setAdapter(arrayAdapter);
                 } else {
                     Toast.makeText(MainActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
                 }

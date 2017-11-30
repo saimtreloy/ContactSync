@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ActivityServerContact"></activity>
+        <activity android:name=".ActivityServerContact" />
+        <activity android:name=".ActivityForgetPassword"></activity>
     </application>
 
 </manifest>

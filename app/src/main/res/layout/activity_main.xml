@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEE">
+
+
+    <RelativeLayout
+        android:id="@+id/layoutToolbarMain"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingTop="25dp"
+        android:background="@color/lightColor">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:gravity="center_vertical"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/txtMainTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:text="Home"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_more"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <ListView
         android:layout_width="fill_parent"
@@ -24,6 +59,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         android:gravity="center">
 
         <Button
@@ -53,10 +89,44 @@
         android:id="@+id/recyclerViewAllContact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:layout_below="@id/layoutButton">
+        android:layout_below="@id/layoutToolbarMain">
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="26dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/btnContactUpload"
+                android:layout_width="64dip"
+                android:layout_height="64dip"
+                android:src="@drawable/ic_upload"
+                app:cb_color="@color/lightColor"
+                app:cb_pressedRingWidth="8dip" />
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/btnContactSync"
+                android:layout_width="64dip"
+                android:layout_height="64dip"
+                android:src="@drawable/ic_download"
+                app:cb_color="@color/lightColor"
+                app:cb_pressedRingWidth="8dip" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

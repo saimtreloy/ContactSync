@@ -5,47 +5,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/backColor"
+    android:background="@drawable/ic_back"
     tools:context="saim.com.contactsync.Login">
 
-    <ImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/ic_top_logo"/>
+
 
     <LinearLayout
+        android:id="@+id/layoutLoginMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="56dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_above="@id/layoutLoginMain"
+            android:src="@drawable/ic_top_logo"
+            android:layout_marginBottom="40dp"/>
 
         <EditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="12sp"
+            android:textColor="@color/lightColor"
             android:inputType="textEmailAddress"
+            android:background="@drawable/ic_round"
             android:hint="Email"
             android:gravity="center"/>
 
         <EditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="12sp"
+            android:textColor="@color/lightColor"
             android:layout_marginTop="10dp"
             android:inputType="textPassword"
             android:hint="Password"
+            android:background="@drawable/ic_round"
             android:gravity="center"/>
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_marginTop="10dp"
+            android:background="@drawable/ic_round_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="14dp"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:text="Login"/>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forget password"
+                android:textSize="10dp"
+                android:textStyle="italic"
+                android:textColor="#FFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:text=" | "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register here.."
+                android:textSize="10dp"
+                android:textStyle="italic"
+                android:textColor="#FFF"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -58,27 +103,28 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txtForgetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forget password"
-            android:textSize="10dp"
-            android:textStyle="italic"
-            android:textColor="@color/accentColor"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" | "/>
-
-        <TextView
             android:id="@+id/txtTarmsCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tarms and conditions"
+            android:text="Tarms &amp; conditions"
             android:textSize="10dp"
             android:textStyle="italic"
-            android:textColor="@color/accentColor"/>
+            android:textColor="#FFF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:text=" | "/>
+
+        <TextView
+            android:id="@+id/txtDeveloper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developer information"
+            android:textSize="10dp"
+            android:textColor="#FFF"
+            android:textStyle="italic"/>
 
     </LinearLayout>
 
