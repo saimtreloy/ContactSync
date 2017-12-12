@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -53,6 +54,7 @@ public class ActivityServerContact extends AppCompatActivity {
     RecyclerView.Adapter serverContactAdapter;
 
     ImageView imgSyncServerConatct;
+    TextView txtMainTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class ActivityServerContact extends AppCompatActivity {
         recyclerViewServerContact.setHasFixedSize(true);
 
         imgSyncServerConatct = (ImageView) findViewById(R.id.imgSyncServerConatct);
+        txtMainTitle = (TextView) findViewById(R.id.txtMainTitle);
 
         ContactRetrive(new SharedPrefDatabase(getApplicationContext()).RetriveID().toString().trim());
 
@@ -193,12 +196,12 @@ public class ActivityServerContact extends AppCompatActivity {
     private class AsyncTaskAddAllContact extends AsyncTask<String, String, String> {
 
         private String resp;
+        int i =0;
 
         @Override
         protected String doInBackground(String... params) {
-            progressDialog.setMessage("Please wait. Contact is updateing...");
-            progressDialog.show();
-            for (int i=0; i<adapterlist.size(); i++){
+
+            for (i=0; i<adapterlist.size(); i++){
                 Log.d("SAIM HANDLER", adapterlist.get(i).getName());
                 ContentValues values = new ContentValues();
                 values.put(Contacts.People.NUMBER, adapterlist.get(i).getNumber());
@@ -210,6 +213,8 @@ public class ActivityServerContact extends AppCompatActivity {
                 values.put(Contacts.People.Phones.TYPE, Contacts.People.TYPE_MOBILE);
                 values.put(Contacts.People.NUMBER, adapterlist.get(i).getNumber());
                 updateUri = getContentResolver().insert(updateUri, values);
+
+                publishProgress(adapterlist.get(i).getName());
             }
 
             return resp;
@@ -225,14 +230,17 @@ public class ActivityServerContact extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            progressDialog.setTitle("Updateing Contacts");
+            progressDialog.setMessage("Please wait. Contact is updateing...");
+            progressDialog.show();
         }
 
 
         @Override
         protected void onProgressUpdate(String... text) {
-
+            progressDialog.setMessage(text[0]);
         }
+
     }
 
 }

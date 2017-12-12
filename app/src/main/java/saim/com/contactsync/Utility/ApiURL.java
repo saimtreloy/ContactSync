@@ -11,4 +11,8 @@ public class ApiURL {
     public static String getLogin = header + "contact_sync/login.php"; //user_email, user_pass
     public static String getContactUpload = header + "contact_sync/contact_insert.php"; //user_id, contact_list
     public static String getContactList = header + "contact_sync/contact_retrive.php"; //user_id
+
+    //http://globalearnmoney.com/contact_sync/login.php
+    //http://globalearnmoney.com/contact_sync/contact_insert.php
+    //http://globalearnmoney.com/contact_sync/contact_retrive.php
 }
